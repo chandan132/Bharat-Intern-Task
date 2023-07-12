@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Details</title>
+    <style>
+      /* CSS styling for team-details.html */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+      }
+
+      h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .team-details form {
+        margin-bottom: 20px;
+      }
+
+      .team-details label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .team-details input[type="date"],
+      .team-details input[type="number"],
+      .team-details input[type="text"],
+      .team-details textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+
+      .team-details input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .team-details input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .team-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .team-details table th,
+      .team-details table td {
+        padding: 8px;
+        border: 1px solid #ccc;
+      }
+
+      .team-details table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Team Details</h2>
+      <form class="team-details-form">
+        <div>
+          <label for="start-date">Start Date:</label>
+          <input type="date" id="start-date" name="start-date" />
+        </div>
+        <div>
+          <label for="end-date">End Date:</label>
+          <input type="date" id="end-date" name="end-date" />
+        </div>
+        <div>
+          <label for="team-size">Team Size:</label>
+          <input type="number" id="team-size" name="team-size" />
+        </div>
+        <div>
+          <label for="team-members">Team Members:</label>
+          <textarea id="team-members" name="team-members" rows="4"></textarea>
+        </div>
+        <div>
+          <label for="specialization">Specialization:</label>
+          <input type="text" id="specialization" name="specialization" />
+        </div>
+        <div>
+          <label for="manager-name">Manager Name:</label>
+          <input type="text" id="manager-name" name="manager-name" />
+        </div>
+        <div>
+          <label for="position">Position:</label>
+          <input type="text" id="position" name="position" />
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+
+      <table class="team-details-table">
+        <tr>
+          <th>Team Member Name</th>
+          <th>Specialization</th>
+          <th>Manager Name</th>
+          <th>Position</th>
+        </tr>
+        <!-- Data will be dynamically added here -->
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Team Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .team-container {
+        max-width: 100%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px #ff4a4a;
+      }
+
+      .new-team-form {
+        display: none;
+        animation: fadeIn 0.5s ease;
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+      }
+
+      .team-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 10px;
+      }
+
+      .team-card-info h3 {
+        font-size: 20px;
+        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .team-card-info p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+
+      .team-card-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .team-card-actions button {
+        margin-left: 10px;
+      }
+
+      .action-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s;
+        text-align: center;
+      }
+
+      .action-button.primary {
+        background-color: #6c63ff;
+      }
+
+      .action-button.secondary {
+        background-color: #f48fb1;
+      }
+
+      .team-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive CSS */
+      @media (max-width: 768px) {
+        .team-container {
+          padding: 10px;
+        }
+        .team-card {
+          padding: 10px;
+        }
+        .team-card-actions button {
+          margin-left: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="team-container">
+      <h1>Team Details</h1>
+      <button class="action-button primary" onclick="toggleNewTeamForm()">
+        Create New Team
+      </button>
+      <div class="new-team-form">
+        <h2>New Team</h2>
+        <div class="input-container">
+          <input type="text" id="projectName" placeholder="Project Name" />
+        </div>
+        <div class="input-container">
+          <input
+            type="text"
+            id="teamMembers"
+            placeholder="Team Members (comma-separated)"
+          />
+        </div>
+        <div class="input-container">
+          <input type="date" id="startDate" placeholder="Start Date" />
+          <input type="date" id="endDate" placeholder="End Date" />
+        </div>
+        <div class="input-container">
+          <input type="number" id="teamSize" placeholder="Team Size" />
+        </div>
+        <div class="input-container">
+          <button class="action-button primary" onclick="addNewTeam()">
+            Add Team
+          </button>
+        </div>
+      </div>
+
+      <div class="existing-teams">
+        <h2>Existing Teams</h2>
+        <ul class="team-list" id="existingTeamsList">
+          <!-- Existing teams will be added here -->
+          <!-- Sample team card -->
+          <li class="team-card">
+            <div class="team-card-info">
+              <h3>Sample Team 1</h3>
+              <p>Project: Sample Project</p>
+              <p>Team Members: John Doe, Jane Smith</p>
+              <p>Start Date: 2023-07-01, End Date: 2023-08-31</p>
+            </div>
+            <div class="team-card-actions">
+              <button
+                class="action-button secondary"
+                onclick="viewTeamMembers()"
+              >
+                View Members
+              </button>
+              <button class="action-button secondary" onclick="editTeam()">
+                Edit
+              </button>
+              <button class="action-button secondary" onclick="deleteTeam()">
+                Delete
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function toggleNewTeamForm() {
+        const newTeamForm = document.querySelector(".new-team-form");
+        newTeamForm.style.display =
+          newTeamForm.style.display === "none" ? "block" : "none";
+      }
+
+      function addNewTeam() {
+        // Code to handle adding a new team to the existingTeamsList
+        const projectName = document.getElementById("projectName").value;
+        const teamMembers = document.getElementById("teamMembers").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const teamSize = document.getElementById("teamSize").value;
+
+        // Create a new team card
+        const newTeamCard = document.createElement("li");
+        newTeamCard.classList.add("team-card");
+
+        // Create the team card content
+        const teamCardInfo = document.createElement("div");
+        teamCardInfo.classList.add("team-card-info");
+
+        const h3 = document.createElement("h3");
+        h3.textContent = projectName;
+        teamCardInfo.appendChild(h3);
+
+        const p1 = document.createElement("p");
+        p1.textContent = `Project: ${projectName}`;
+        teamCardInfo.appendChild(p1);
+
+        const p2 = document.createElement("p");
+        p2.textContent = `Team Members: ${teamMembers}`;
+        teamCardInfo.appendChild(p2);
+
+        const p3 = document.createElement("p");
+        p3.textContent = `Start Date: ${startDate}, End Date: ${endDate}`;
+        teamCardInfo.appendChild(p3);
+
+        // Create the team card actions
+        const teamCardActions = document.createElement("div");
+        teamCardActions.classList.add("team-card-actions");
+
+        const viewButton = document.createElement("button");
+        viewButton.classList.add("action-button", "secondary");
+        viewButton.textContent = "View Members";
+        viewButton.onclick = () =>
+          viewTeamMembers(
+            projectName,
+            teamMembers,
+            startDate,
+            endDate,
+            teamSize
+          );
+        teamCardActions.appendChild(viewButton);
+
+        const editButton = document.createElement("button");
+        editButton.classList.add("action-button", "secondary");
+        editButton.textContent = "Edit";
+        editButton.onclick = () =>
+          editTeam(projectName, teamMembers, startDate, endDate, teamSize);
+        teamCardActions.appendChild(editButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("action-button", "secondary");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => deleteTeam(newTeamCard);
+        teamCardActions.appendChild(deleteButton);
+
+        // Add content and actions to the new team card
+        newTeamCard.appendChild(teamCardInfo);
+        newTeamCard.appendChild(teamCardActions);
+
+        // Add the new team card to the existingTeamsList
+        const existingTeamsList = document.getElementById("existingTeamsList");
+        existingTeamsList.appendChild(newTeamCard);
+
+        // Clear the input fields after adding the team
+        document.getElementById("projectName").value = "";
+        document.getElementById("teamMembers").value = "";
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+        document.getElementById("teamSize").value = "";
+
+        // Hide the new team form after adding the team
+        toggleNewTeamForm();
+      }
+
+      function viewTeamMembers(
+        projectName,
+        teamMembers,
+        startDate,
+        endDate,
+        teamSize
+      ) {
+        // Code to handle viewing team members
+        alert(
+          `Team: ${projectName}\nMembers: ${teamMembers}\nStart Date: ${startDate}\nEnd Date: ${endDate}\nTeam Size: ${teamSize}`
+        );
+      }
+
+      function editTeam(
+        projectName,
+        teamMembers,
+        startDate,
+        endDate,
+        teamSize
+      ) {
+        // Code to handle editing a team
+        const newProjectName = prompt("Enter new project name:", projectName);
+        const newTeamMembers = prompt(
+          "Enter new team members (comma-separated):",
+          teamMembers
+        );
+        const newStartDate = prompt("Enter new start date:", startDate);
+        const newEndDate = prompt("Enter new end date:", endDate);
+        const newTeamSize = prompt("Enter new team size:", teamSize);
+
+        // Update the team card with the edited details
+        const teamCard = event.target.closest(".team-card");
+        const teamCardInfo = teamCard.querySelector(".team-card-info");
+
+        const h3 = teamCardInfo.querySelector("h3");
+        h3.textContent = newProjectName;
+
+        const p1 = teamCardInfo.querySelectorAll("p")[0];
+        p1.textContent = `Project: ${newProjectName}`;
+
+        const p2 = teamCardInfo.querySelectorAll("p")[1];
+        p2.textContent = `Team Members: ${newTeamMembers}`;
+
+        const p3 = teamCardInfo.querySelectorAll("p")[2];
+        p3.textContent = `Start Date: ${newStartDate}, End Date: ${newEndDate}`;
+
+        // Optionally, update the team card actions onclick functions with the new details
+        const viewButton = teamCard.querySelector(
+          ".team-card-actions button:nth-child(1)"
+        );
+        viewButton.onclick = () =>
+          viewTeamMembers(
+            newProjectName,
+            newTeamMembers,
+            newStartDate,
+            newEndDate,
+            newTeamSize
+          );
+
+        const editButton = teamCard.querySelector(
+          ".team-card-actions button:nth-child(2)"
+        );
+        editButton.onclick = () =>
+          editTeam(
+            newProjectName,
+            newTeamMembers,
+            newStartDate,
+            newEndDate,
+            newTeamSize
+          );
+
+        const deleteButton = teamCard.querySelector(
+          ".team-card-actions button:nth-child(3)"
+        );
+        deleteButton.onclick = () => deleteTeam(teamCard);
+      }
+
+      function deleteTeam(teamCard) {
+        // Code to handle deleting a team
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this team?"
+        );
+        if (confirmDelete) {
+          const existingTeamsList =
+            document.getElementById("existingTeamsList");
+          existingTeamsList.removeChild(teamCard);
+        }
+      }
+    </script>
+  </body>
+</html>

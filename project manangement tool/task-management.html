@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f1f1;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .add-task-form {
+        background-color: #fff;
+        padding: 1rem;
+        max-width: 400px;
+        margin: 0 auto;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .add-task-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .add-task-form input[type="text"],
+      .add-task-form input[type="date"],
+      .add-task-form select {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .add-task-form .color-select-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .color-option {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        cursor: pointer;
+      }
+
+      .add-task-button {
+        background-color: #333;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .task-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1200px;
+        margin: 2rem auto;
+        gap: 1rem;
+      }
+
+      .task {
+        background-color: #fff;
+        border: 2px solid #777;
+        border-radius: 4px;
+        padding: 0.5rem;
+        min-width: 200px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .task .emoji {
+        font-size: 24px;
+        margin-bottom: 0.5rem;
+      }
+
+      .task .task-info {
+        text-align: center;
+      }
+
+      .task .task-name {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+      }
+
+      .task .task-details {
+        font-size: 14px;
+        color: #777;
+      }
+
+      .chart-container {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .chart {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .color-legend {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #333;
+        margin-top: 1rem;
+      }
+
+      .color-legend .color {
+        display: flex;
+        align-items: center;
+      }
+
+      .color-legend .color span {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+        border-radius: 50%;
+      }
+
+      .task {
+        /* ... (other CSS properties remain the same) ... */
+        transition: transform 0.3s ease;
+      }
+
+      .task:hover {
+        transform: scale(1.05) rotateY(10deg);
+      }
+
+      .task.added {
+        animation: pulse 1s ease;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Task Management Project</h1>
+    </header>
+    <div class="add-task-form">
+      <label for="taskName">Task Name</label>
+      <input type="text" id="taskName" />
+
+      <label for="dueDate">Due Date</label>
+      <input type="date" id="dueDate" />
+
+      <label for="colorSelect">Task Color</label>
+      <div class="color-select-container">
+        <div
+          class="color-option"
+          style="background-color: red"
+          data-color="red"
+        ></div>
+        <div
+          class="color-option"
+          style="background-color: blue"
+          data-color="blue"
+        ></div>
+        <div
+          class="color-option"
+          style="background-color: green"
+          data-color="green"
+        ></div>
+        <select id="colorSelect">
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+        </select>
+      </div>
+
+      <button class="add-task-button" onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="task-container" id="taskContainer">
+      <!-- Tasks will be added here dynamically -->
+    </div>
+
+    <div class="chart-container">
+      <div class="chart">
+        <div class="chart-circle" id="redCircle"></div>
+        <div class="chart-circle" id="blueCircle"></div>
+        <div class="chart-circle" id="greenCircle"></div>
+        <div class="chart-content">
+          <span id="redPercentage">0%</span>
+          <span id="bluePercentage">0%</span>
+          <span id="greenPercentage">0%</span>
+        </div>
+      </div>
+      <div class="color-legend">
+        <div class="color"><span style="background-color: red"></span>Red</div>
+        <div class="color">
+          <span style="background-color: blue"></span>Blue
+        </div>
+        <div class="color">
+          <span style="background-color: green"></span>Green
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const colorOptions = document.querySelectorAll(".color-option");
+      const colorSelect = document.getElementById("colorSelect");
+
+      colorOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          colorSelect.value = option.dataset.color;
+        });
+      });
+
+      function addTask() {
+        const taskName = document.getElementById("taskName").value;
+        const dueDate = document.getElementById("dueDate").value;
+        const color = colorSelect.value;
+
+        if (taskName.trim() === "" || dueDate.trim() === "") {
+          alert("Please fill in all the fields.");
+          return;
+        }
+
+        const taskContainer = document.getElementById("taskContainer");
+
+        const taskElement = document.createElement("div");
+        taskElement.className = "task";
+        taskElement.style.borderColor = color;
+
+        const emojiElement = document.createElement("div");
+        emojiElement.className = "emoji";
+        emojiElement.textContent = "✨";
+        taskElement.appendChild(emojiElement);
+
+        const taskInfoElement = document.createElement("div");
+        taskInfoElement.className = "task-info";
+
+        const taskNameElement = document.createElement("div");
+        taskNameElement.className = "task-name";
+        taskNameElement.textContent = taskName;
+        taskInfoElement.appendChild(taskNameElement);
+
+        const taskDetailsElement = document.createElement("div");
+        taskDetailsElement.className = "task-details";
+        taskDetailsElement.textContent = dueDate;
+        taskInfoElement.appendChild(taskDetailsElement);
+
+        taskElement.appendChild(taskInfoElement);
+
+        taskContainer.appendChild(taskElement);
+
+        updateChart();
+      }
+
+      function updateChart() {
+        const tasks = document.querySelectorAll(".task");
+        const redCircle = document.getElementById("redCircle");
+        const blueCircle = document.getElementById("blueCircle");
+        const greenCircle = document.getElementById("greenCircle");
+        const redPercentage = document.getElementById("redPercentage");
+        const bluePercentage = document.getElementById("bluePercentage");
+        const greenPercentage = document.getElementById("greenPercentage");
+
+        let redCount = 0;
+        let blueCount = 0;
+        let greenCount = 0;
+
+        tasks.forEach((task) => {
+          const color = task.style.borderColor;
+          if (color === "red") {
+            redCount++;
+          } else if (color === "blue") {
+            blueCount++;
+          } else if (color === "green") {
+            greenCount++;
+          }
+        });
+
+        const totalTasks = tasks.length;
+
+        const redPercent = (redCount / totalTasks) * 100;
+        const bluePercent = (blueCount / totalTasks) * 100;
+        const greenPercent = (greenCount / totalTasks) * 100;
+
+        redCircle.style.transform = `rotate(${(redPercent / 100) * 360}deg)`;
+        blueCircle.style.transform = `rotate(${(bluePercent / 100) * 360}deg)`;
+        greenCircle.style.transform = `rotate(${
+          (greenPercent / 100) * 360
+        }deg)`;
+
+        redPercentage.textContent = `${redPercent.toFixed(1)}%`;
+        bluePercentage.textContent = `${bluePercent.toFixed(1)}%`;
+        greenPercentage.textContent = `${greenPercent.toFixed(1)}%`;
+      }
+    </script>
+  </body>
+</html>

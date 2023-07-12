@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Planner</title>
+    <style>
+      /* Global styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: transparent; /* No background color for the header */
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+
+      .main-section {
+        text-align: center;
+        padding: 40px;
+      }
+
+      .main-section h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #191515;
+        animation: fadein 2s ease-in-out;
+      }
+
+      .main-section p {
+        font-size: 16px;
+        margin-bottom: 30px;
+        color: #666;
+        animation: fadein 2s ease-in-out;
+      }
+
+      .background-image-section {
+        background-image: url("./image/image4.jpg");
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        padding: 80px 0;
+        color: #fff;
+      }
+
+      .background-image-section h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #c87575;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        animation: fadein 2s ease-in-out;
+      }
+
+      .background-image-section p {
+        font-size: 20px;
+        margin-bottom: 40px;
+        color: #73c1e5;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        animation: fadein 2s ease-in-out;
+      }
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Button styles */
+      .get-started-button {
+        padding: 12px 24px;
+        background-color: #44c767;
+        color: #ece8e8;
+        text-decoration: none;
+        font-size: 18px;
+        border-radius: 4px;
+        border: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .get-started-button:hover {
+        background-color: #3cbb61;
+      }
+
+      /* Footer styles */
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* CSS styling for page2.html */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .project-steps {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .project-step {
+        width: 150px;
+        height: 150px;
+        background-color: #ec90c7;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #292222;
+        font-size: 16px;
+        font-weight: bold;
+        animation: pulse-animation 1s infinite;
+      }
+
+      @media screen and (max-width: 600px) {
+        .main-section h2 {
+          font-size: 24px;
+        }
+
+        .main-section p {
+          font-size: 14px;
+        }
+
+        .background-image-section h2 {
+          font-size: 28px;
+        }
+
+        .background-image-section p {
+          font-size: 16px;
+        }
+
+        .get-started-button {
+          font-size: 16px;
+        }
+
+        .project-step {
+          width: 120px;
+          height: 120px;
+          font-size: 14px;
+        }
+      }
+
+      @keyframes pulse-animation {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Project Planner</h1>
+    </header>
+
+    <div class="background-image-section">
+      <h2>Streamline Your Project Management</h2>
+      <p>
+        Efficiently manage projects, track time and expenses, and increase
+        visibility with our powerful project management tool.
+      </p>
+    </div>
+
+    <section class="main-section">
+      <h2>Get Started</h2>
+      <p>Start managing your projects more effectively today.</p>
+      <a href="index1.html"
+        ><button class="get-started-button">Get Started</button></a
+      >
+    </section>
+
+    <div class="container">
+      <h1>Project Planning Steps with Animation</h1>
+      <div class="project-steps">
+        <div class="project-step">Project Construction</div>
+        <div class="project-step">Project Planning</div>
+        <div class="project-step">Project Execution</div>
+        <div class="project-step">Project Controlling</div>
+        <div class="project-step">Project Closing</div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2023 Project Management Tool. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

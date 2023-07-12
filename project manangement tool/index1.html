@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Management Tool</title>
+    <style>
+      /* CSS styling for index.html */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f8f9;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .back-button:hover {
+        background-color: #45a049;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+        justify-items: center;
+        margin-top: 40px;
+      }
+
+      .option {
+        width: 280px;
+        height: 280px;
+        padding: 20px;
+        background-color: #e2f1f6;
+        color: #333;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s; /* Added transform for the animation */
+        position: relative;
+      }
+
+      /* Scale-up animation for the boxes */
+      .option:hover {
+        background-color: #d0e7ef;
+        transform: scale(1.05);
+      }
+
+      .option-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .option-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .option-description {
+        font-size: 14px;
+      }
+
+      .option-image img {
+        width: 120px;
+        height: 120px;
+        margin-top: 20px;
+      }
+
+      .option-icon::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: url("icon.png") center/contain no-repeat;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .option:hover .option-icon::before {
+        opacity: 1;
+      }
+
+      .join-link {
+        margin-top: 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .join-link:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="#" class="back-button" onclick="goBack()">Back</a>
+
+      <h1>Welcome to the Project Management Tool</h1>
+      <div class="options">
+        <a href="team-details.html" class="option">
+          <div class="option-icon">👥</div>
+          <div class="option-title">Team Details</div>
+          <div class="option-description">Add team members and roles</div>
+          <div class="option-image">
+            <img src="./image/image3.jpg" alt="Team Image" />
+          </div>
+        </a>
+        <a href="report-generation.html" class="option">
+          <div class="option-icon">📊</div>
+          <div class="option-title">Report Generation</div>
+          <div class="option-description">Generate project reports</div>
+          <div class="option-image">
+            <img src="./image/image9.jpg" alt="Report Image" />
+          </div>
+        </a>
+        <a href="time-tracking.html" class="option">
+          <div class="option-icon">⏱️</div>
+          <div class="option-title">Time Tracking</div>
+          <div class="option-description">Track project time and tasks</div>
+          <div class="option-image">
+            <img src="./image/image7.jpg" alt="Time Tracking Image" />
+          </div>
+        </a>
+        <a href="calendar-integration.html" class="option">
+          <div class="option-icon">📅</div>
+          <div class="option-title">Calendar Integration</div>
+          <div class="option-description">
+            Integrate project tasks with calendar
+          </div>
+          <div class="option-image">
+            <img src="./image/image6.jpg" alt="Calendar Integration Image" />
+          </div>
+        </a>
+        <a href="task-management.html" class="option">
+          <div class="option-icon">📋</div>
+          <div class="option-title">Task Management</div>
+          <div class="option-description">
+            Manage project tasks and deadlines
+          </div>
+          <div class="option-image">
+            <img src="./image/image4.jpg" alt="Task Management Image" />
+          </div>
+        </a>
+        <a href="document-management.html" class="option">
+          <div class="option-icon">📂</div>
+          <div class="option-title">Document Management</div>
+          <div class="option-description">
+            Store and share project documents
+          </div>
+          <div class="option-image">
+            <img src="./image/image8.jpg" alt="Document Management Image" />
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

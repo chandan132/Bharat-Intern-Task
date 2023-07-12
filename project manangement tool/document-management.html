@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Information</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px #ff4a4a;
+      }
+
+      .project-image {
+        display: block;
+        max-width: 100%;
+        margin: 20px auto;
+        border-radius: 8px;
+      }
+
+      .steps-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        animation: fadeIn 1s ease;
+      }
+
+      .step-number {
+        font-size: 24px;
+        color: #fff;
+        background-color: #6c63ff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      h2 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #666;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Project Information</h1>
+      <img class="project-image" src="/image/image2.jpg" alt="Project Image" />
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h2>Step 1: Project Planning</h2>
+            <p>
+              During this phase, the project's objectives, scope, and timeline
+              are defined. Stakeholders' requirements and expectations are
+              gathered and analyzed to create a detailed project plan. The
+              project team is formed, and roles and responsibilities are
+              assigned.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h2>Step 2: Resource Allocation</h2>
+            <p>
+              In this phase, resources such as human resources, equipment, and
+              budget are allocated to specific project tasks. Project managers
+              ensure that all required resources are available and ready to
+              support the project's execution phase.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h2>Step 3: Development</h2>
+            <p>
+              During this phase, the project's deliverables are developed based
+              on the project plan and requirements. The development team works
+              on designing and creating the products, software, or solutions
+              that align with the project's goals.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h2>Step 4: Testing</h2>
+            <p>
+              Testing is a critical phase to ensure that the project's
+              deliverables meet the required quality standards. The testing team
+              conducts various tests, such as unit testing, integration testing,
+              and user acceptance testing, to identify and fix any defects or
+              issues.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h2>Step 5: Deployment</h2>
+            <p>
+              In the deployment phase, the completed project deliverables are
+              released and implemented. The project team ensures a smooth
+              transition to the operational environment. The stakeholders are
+              informed about the project's successful completion, and necessary
+              training may be provided to end-users.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Animate the project image and steps on page load
+      const projectImage = document.querySelector(".project-image");
+      const steps = document.querySelectorAll(".step");
+
+      projectImage.style.animation = "fadeIn 1s ease";
+      steps.forEach((step, index) => {
+        step.style.animation = `fadeIn 1s ease ${index * 0.5}s`;
+      });
+    </script>
+  </body>
+</html>

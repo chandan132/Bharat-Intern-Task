@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Management Calendar</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 0;
+      }
+
+      .calendar-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease;
+        overflow: hidden;
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #6c63ff;
+        color: #fff;
+        padding: 10px;
+      }
+
+      .calendar-month {
+        font-size: 24px;
+      }
+
+      .calendar-actions button {
+        font-size: 16px;
+        background-color: transparent;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        outline: none;
+        transition: opacity 0.3s;
+      }
+
+      .calendar-actions button:hover {
+        opacity: 0.7;
+      }
+
+      .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        background-color: #f1f1f1;
+        font-weight: bold;
+      }
+
+      .calendar-day {
+        position: relative;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 0;
+        min-height: 80px;
+      }
+
+      .calendar-day.today {
+        background-color: #6c63ff;
+        color: #fff;
+      }
+
+      .calendar-day.has-event {
+        background-color: #f48fb1;
+        color: #fff;
+      }
+
+      .task-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .task-item {
+        background-color: #6c63ff;
+        color: #fff;
+        padding: 5px;
+        margin: 5px 0;
+        border-radius: 4px;
+        cursor: grab;
+      }
+
+      .calendar-events {
+        padding: 10px;
+      }
+
+      .event-details {
+        display: none;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+      }
+
+      .event-details.active {
+        display: block;
+      }
+
+      .event-details h3 {
+        font-size: 18px;
+        color: #6c63ff;
+        margin-bottom: 5px;
+      }
+
+      .event-details p {
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .event-form-container {
+        display: none;
+        max-width: 800px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .event-form-container.active {
+        display: block;
+      }
+
+      .event-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .event-form label {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .event-form input[type="text"],
+      .event-form select {
+        font-size: 16px;
+        padding: 5px;
+      }
+
+      .event-form button {
+        font-size: 16px;
+        background-color: #6c63ff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        max-width: 100px;
+        align-self: flex-end;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <div class="calendar-month" id="calendar-month">July 2023</div>
+        <div class="calendar-actions">
+          <button id="prev-btn">&lt;</button>
+          <button id="next-btn">&gt;</button>
+        </div>
+      </div>
+      <div class="calendar-days">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+      <div class="calendar-events" id="calendar-events"></div>
+    </div>
+
+    <div class="event-form-container" id="event-form-container">
+      <form class="event-form" id="event-form">
+        <label for="task">Task:</label>
+        <input type="text" id="task" required />
+        <label for="date">Date:</label>
+        <input type="date" id="date" required />
+        <button type="submit">Add Task</button>
+      </form>
+
+      <div class="event-form-container" id="event-form-container">
+        <form class="event-form" id="event-form">
+          <label for="task">Task:</label>
+          <input type="text" id="task" required />
+          <label for="date">Date:</label>
+          <input type="date" id="date" required />
+          <button type="submit">Add Task</button>
+          <button type="button" id="cancel-event-btn">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      let eventsData = {};
+
+      function updateCalendar() {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const firstDayOfMonth = new Date(year, month, 1);
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const startDay = firstDayOfMonth.getDay();
+        const calendarDays = document.querySelector(".calendar-days");
+        const calendarEvents = document.querySelector(".calendar-events");
+        const calendarMonth = document.getElementById("calendar-month");
+
+        calendarDays.innerHTML = "";
+        calendarMonth.textContent = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "long",
+        }).format(currentDate);
+
+        for (let i = 0; i < startDay; i++) {
+          const dayCell = document.createElement("div");
+          dayCell.classList.add("calendar-day");
+          calendarDays.appendChild(dayCell);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayCell = document.createElement("div");
+          dayCell.textContent = day;
+          dayCell.classList.add("calendar-day");
+          if (
+            year === currentDate.getFullYear() &&
+            month === currentDate.getMonth() &&
+            day === currentDate.getDate()
+          ) {
+            dayCell.classList.add("today");
+          }
+          const dateKey = `${year}-${month + 1}-${day}`;
+          if (eventsData[dateKey]) {
+            dayCell.classList.add("has-event");
+          }
+          dayCell.addEventListener("click", () => showEventDetails(dateKey));
+          calendarDays.appendChild(dayCell);
+        }
+
+        calendarEvents.innerHTML = "";
+        for (const dateKey in eventsData) {
+          const eventList = document.createElement("ul");
+          eventList.classList.add("task-list");
+          eventsData[dateKey].forEach((event) => {
+            const eventItem = document.createElement("li");
+            eventItem.classList.add("task-item");
+            eventItem.textContent = event;
+            eventList.appendChild(eventItem);
+          });
+
+          const eventDate = new Date(dateKey);
+          const eventDetails = document.createElement("div");
+          eventDetails.classList.add("event-details");
+          if (
+            year === eventDate.getFullYear() &&
+            month === eventDate.getMonth()
+          ) {
+            eventDetails.classList.add("active");
+          }
+          eventDetails.innerHTML = `<h3>${eventDate.toLocaleDateString(
+            "en-US",
+            {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }
+          )}</h3>`;
+          eventDetails.appendChild(eventList);
+          calendarEvents.appendChild(eventDetails);
+        }
+      }
+
+      function showEventDetails(dateKey) {
+        const eventDetailsList = document.querySelectorAll(".event-details");
+        eventDetailsList.forEach((details) =>
+          details.classList.remove("active")
+        );
+        const eventDetails = document.querySelector(
+          `.event-details[data-date="${dateKey}"]`
+        );
+        if (eventDetails) {
+          eventDetails.classList.add("active");
+        }
+      }
+
+      function addEvent(event) {
+        event.preventDefault();
+        const taskInput = document.getElementById("task");
+        const dateInput = document.getElementById("date");
+        const task = taskInput.value.trim();
+        const date = dateInput.value;
+        if (task && date) {
+          const dateKey = date.split("-").map(Number).join("-");
+          if (!eventsData[dateKey]) {
+            eventsData[dateKey] = [];
+          }
+          eventsData[dateKey].push(task);
+          updateCalendar();
+          taskInput.value = "";
+          dateInput.value = "";
+          hideEventForm();
+        }
+      }
+
+      function showEventForm() {
+        const eventFormContainer = document.getElementById(
+          "event-form-container"
+        );
+        eventFormContainer.classList.add("active");
+      }
+
+      function hideEventForm() {
+        const eventFormContainer = document.getElementById(
+          "event-form-container"
+        );
+        eventFormContainer.classList.remove("active");
+      }
+
+      function init() {
+        updateCalendar();
+        const eventForm = document.getElementById("event-form");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const addEventBtn = document.getElementById("add-event-btn");
+        const cancelEventBtn = document.getElementById("cancel-event-btn");
+
+        eventForm.addEventListener("submit", addEvent);
+        prevBtn.addEventListener("click", () => {
+          const currentDate = new Date();
+          currentDate.setMonth(currentDate.getMonth() - 1);
+          updateCalendar();
+        });
+        nextBtn.addEventListener("click", () => {
+          const currentDate = new Date();
+          currentDate.setMonth(currentDate.getMonth() + 1);
+          updateCalendar();
+        });
+        addEventBtn.addEventListener("click", showEventForm);
+        cancelEventBtn.addEventListener("click", hideEventForm);
+      }
+      function addEvent(event) {
+        event.preventDefault();
+        const taskInput = document.getElementById("task");
+        const dateInput = document.getElementById("date");
+        const task = taskInput.value.trim();
+        const date = dateInput.value;
+        if (task && date) {
+          const dateKey = date.split("-").map(Number).join("-");
+          if (!eventsData[dateKey]) {
+            eventsData[dateKey] = [];
+          }
+          eventsData[dateKey].push(task);
+          updateCalendar();
+          taskInput.value = "";
+          dateInput.value = "";
+          hideEventForm();
+        }
+      }
+
+      function showEventForm(dateKey) {
+        const eventFormContainer = document.getElementById(
+          "event-form-container"
+        );
+        const dateInput = document.getElementById("date");
+        dateInput.value = dateKey;
+        eventFormContainer.classList.add("active");
+      }
+
+      function hideEventForm() {
+        const eventFormContainer = document.getElementById(
+          "event-form-container"
+        );
+        eventFormContainer.classList.remove("active");
+      }
+
+      function init() {
+        updateCalendar();
+        const eventForm = document.getElementById("event-form");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const cancelEventBtn = document.getElementById("cancel-event-btn");
+
+        eventForm.addEventListener("submit", addEvent);
+        prevBtn.addEventListener("click", () => {
+          const currentDate = new Date();
+          currentDate.setMonth(currentDate.getMonth() - 1);
+          updateCalendar();
+        });
+        nextBtn.addEventListener("click", () => {
+          const currentDate = new Date();
+          currentDate.setMonth(currentDate.getMonth() + 1);
+          updateCalendar();
+        });
+        cancelEventBtn.addEventListener("click", hideEventForm);
+
+        // Get all calendar day elements and attach a click event listener to each of them
+        const calendarDays = document.querySelectorAll(".calendar-day");
+        calendarDays.forEach((dayCell) => {
+          dayCell.addEventListener("click", () =>
+            showEventForm(dayCell.dataset.dateKey)
+          );
+        });
+      }
+
+      init();
+    </script>
+  </body>
+</html>

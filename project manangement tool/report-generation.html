@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Styling for the report */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .report-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .report-item {
+        margin-bottom: 10px;
+      }
+      .report-item strong {
+        display: inline-block;
+        min-width: 200px;
+      }
+      .report-item span {
+        color: #ff1493;
+      }
+
+      /* Styling for the inputs */
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+      input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #007bff;
+        color: #ffffff;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Beautiful headline with animation */
+      .headline-container {
+        text-align: center;
+        margin-bottom: 20px;
+        animation: shadowAnimation 2s infinite;
+      }
+      .headline {
+        font-size: 32px;
+        color: #ff1493;
+        text-shadow: 0 0 20px #ff1493;
+      }
+
+      /* CSS animation keyframes */
+      @keyframes shadowAnimation {
+        0% {
+          text-shadow: 0 0 20px #ff1493;
+        }
+        50% {
+          text-shadow: 0 0 30px #ff1493;
+        }
+        100% {
+          text-shadow: 0 0 20px #ff1493;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="report-container">
+      <div class="headline-container">
+        <h1 class="headline">Project Management Report</h1>
+      </div>
+
+      <form id="reportForm" onsubmit="generateReport(event)">
+        <div class="report-item">
+          <strong>Project Name:</strong>
+          <input type="text" name="projectName" />
+        </div>
+        <div class="report-item">
+          <strong>Budget Spent:</strong>
+          <input type="text" name="budgetSpent" />
+        </div>
+        <div class="report-item">
+          <strong>Scope Delivery Estimated Date:</strong>
+          <input type="text" name="scopeDate" />
+        </div>
+        <div class="report-item">
+          <strong>Work Done:</strong> <input type="text" name="workDone" />
+        </div>
+        <div class="report-item">
+          <strong>Risk:</strong> <input type="text" name="risk" />
+        </div>
+        <div class="report-item">
+          <strong>Summary:</strong> <input type="text" name="summary" />
+        </div>
+        <div class="report-item">
+          <strong>Team Velocity:</strong>
+          <input type="text" name="teamVelocity" />
+        </div>
+        <div class="report-item">
+          <strong>Projected Date:</strong>
+          <input type="text" name="projectedDate" />
+        </div>
+        <input type="submit" value="Generate Report" />
+      </form>
+
+      <div id="generatedReport" style="display: none">
+        <!-- The generated report will be displayed here -->
+      </div>
+    </div>
+
+    <script>
+      function generateReport(event) {
+        event.preventDefault();
+
+        // Get form values
+        const projectName = document.getElementsByName("projectName")[0].value;
+        const budgetSpent = document.getElementsByName("budgetSpent")[0].value;
+        const scopeDate = document.getElementsByName("scopeDate")[0].value;
+        const workDone = document.getElementsByName("workDone")[0].value;
+        const risk = document.getElementsByName("risk")[0].value;
+        const summary = document.getElementsByName("summary")[0].value;
+        const teamVelocity =
+          document.getElementsByName("teamVelocity")[0].value;
+        const projectedDate =
+          document.getElementsByName("projectedDate")[0].value;
+
+        // Generate report content
+        const reportContent = `
+                <h1 class="headline">Project Management Report - ${projectName}</h1>
+                <div class="report-item"><strong>Budget Spent:</strong> <span>${budgetSpent}</span></div>
+                <div class="report-item"><strong>Scope Delivery Estimated Date:</strong> <span>${scopeDate}</span></div>
+                <div class="report-item"><strong>Work Done:</strong> <span>${workDone}</span></div>
+                <div class="report-item"><strong>Risk:</strong> <span>${risk}</span></div>
+                <div class="report-item"><strong>Summary:</strong> <span>${summary}</span></div>
+                <div class="report-item"><strong>Team Velocity:</strong> <span>${teamVelocity}</span></div>
+                <div class="report-item"><strong>Projected Date:</strong> <span>${projectedDate}</span></div>
+            `;
+
+        // Display the generated report
+        const generatedReport = document.getElementById("generatedReport");
+        generatedReport.innerHTML = reportContent;
+        generatedReport.style.display = "block";
+      }
+    </script>
+  </body>
+</html>

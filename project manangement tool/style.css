@@ -1,0 +1,94 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  section {
+    padding: 40px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Timeline styles */
+  #timeline-chart {
+    width: 100%;
+    height: 200px;
+    background-color: #f2f2f2;
+  }
+  
+  /* Team section styles */
+  #team-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  #team-form label {
+    font-weight: bold;
+  }
+  
+  #team-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #team-list li {
+    margin-bottom: 10px;
+  }
+  
+  /* Dates section styles */
+  #dates-section label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  <!DOCTYPE html>
+ <html>
+ <head>
+    <title>Project Management Tool - Document Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Project Name - Document Management</h1>
+        <div class="document-list">
+            <!-- Existing documents will be listed here -->
+            <!-- You can use JavaScript to dynamically populate this list -->
+            <div class="document">
+                <h2>Document 1</h2>
+                <p>Description: Lorem ipsum dolor sit amet.</p>
+                <button class="view-button">View</button>
+                <button class="delete-button">Delete</button>
+            </div>
+            <!-- Add more document entries as needed -->
+        </div>
+        <form class="upload-form">
+            <input type="file" id="fileInput">
+            <input type="text" id="documentName" placeholder="Document Name">
+            <input type="text" id="documentDescription" placeholder="Document Description">
+            <button type="submit" class="upload-button">Upload Document</button>
+        </form>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>

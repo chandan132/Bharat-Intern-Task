@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Time Tracking Dashboard</title>
+    <style>
+      .dashboard-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      h1 {
+        color: #ff6b6b;
+        text-align: center;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .input-container label {
+        width: 200px;
+        font-weight: bold;
+      }
+
+      .input-container input,
+      .input-container select {
+        flex: 1;
+        padding: 5px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      .input-container button {
+        margin-left: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .task-list {
+        margin-top: 20px;
+      }
+
+      .task-list h2 {
+        color: #ff6b6b;
+      }
+
+      .task-list ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .task-list li {
+        padding: 10px;
+        background-color: #f1f1f1;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .charts {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .chart {
+        width: 48%;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      /* Adding colors, animations, and shadows */
+      h1 {
+        color: #ff6b6b;
+        text-align: center;
+        text-shadow: 2px 2px 5px rgba(255, 107, 107, 0.3);
+        margin-bottom: 30px;
+      }
+
+      .input-container {
+        /* ... (same as previous) ... */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        transition: transform 0.3s ease;
+      }
+
+      .input-container:hover {
+        transform: scale(1.02);
+      }
+
+      .input-container button {
+        /* ... (same as previous) ... */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+      }
+
+      .input-container button:hover {
+        background-color: #45a049;
+      }
+
+      .task-list li {
+        /* ... (same as previous) ... */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #f8f8f8;
+        transition: transform 0.3s ease;
+      }
+
+      .task-list li:hover {
+        transform: scale(1.02);
+      }
+
+      .chart {
+        /* ... (same as previous) ... */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        transition: transform 0.3s ease;
+      }
+
+      .chart:hover {
+        transform: scale(1.02);
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <h1>Time Tracking Dashboard</h1>
+      <div class="input-container">
+        <label for="projectName">Project Name:</label>
+        <input type="text" id="projectName" placeholder="Enter Project Name" />
+        <label for="projectDate">Date:</label>
+        <input type="date" id="projectDate" />
+        <label for="projectStatus">% Completed:</label>
+        <input
+          type="number"
+          id="projectStatus"
+          min="0"
+          max="100"
+          placeholder="0"
+        />
+        <button onclick="addProject()">Add Project</button>
+      </div>
+      <div class="input-container">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" placeholder="Enter Task Name" />
+        <label for="taskDate">Task Date:</label>
+        <input type="date" id="taskDate" />
+        <label for="taskTime">Task Time:</label>
+        <select id="taskTime">
+          <option value="day">Day</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+      </div>
+      <div class="task-list">
+        <h2>Task List</h2>
+        <ul id="taskList"></ul>
+      </div>
+      <div class="charts">
+        <div class="chart">
+          <h2>Task Completion</h2>
+          <canvas id="taskCompletionChart" width="250" height="250"></canvas>
+        </div>
+        <div class="chart">
+          <h2>Task Time Distribution</h2>
+          <canvas
+            id="taskTimeDistributionChart"
+            width="250"
+            height="250"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const projects = [];
+      const tasks = [];
+
+      function addProject() {
+        const projectName = document.getElementById("projectName").value;
+        const projectDate = document.getElementById("projectDate").value;
+        const projectStatus = parseFloat(
+          document.getElementById("projectStatus").value
+        );
+
+        const project = {
+          name: projectName,
+          date: projectDate,
+          status: projectStatus,
+        };
+
+        projects.push(project);
+        updateTaskList();
+        updateTaskCompletionChart();
+        updateTaskTimeDistributionChart();
+      }
+
+      function addTask() {
+        const taskName = document.getElementById("taskName").value;
+        const taskDate = document.getElementById("taskDate").value;
+        const taskTime = document.getElementById("taskTime").value;
+
+        const task = {
+          name: taskName,
+          date: taskDate,
+          time: taskTime,
+          completed: false,
+        };
+
+        tasks.push(task);
+        updateTaskList();
+        updateTaskCompletionChart();
+        updateTaskTimeDistributionChart();
+      }
+
+      function updateTaskList() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+          const taskItem = document.createElement("li");
+          taskItem.innerHTML = `
+                    <span>${task.name}</span>
+                    <span>${task.date} (${task.time})</span>
+                    <button onclick="toggleTaskStatus(${index})">${
+            task.completed ? "Completed" : "Not Completed"
+          }</button>
+                `;
+          taskList.appendChild(taskItem);
+        });
+      }
+
+      function toggleTaskStatus(index) {
+        tasks[index].completed = !tasks[index].completed;
+        updateTaskList();
+        updateTaskCompletionChart();
+      }
+
+      function updateTaskCompletionChart() {
+        const completedTasks = tasks.filter((task) => task.completed).length;
+        const notCompletedTasks = tasks.filter(
+          (task) => !task.completed
+        ).length;
+        const data = [completedTasks, notCompletedTasks];
+
+        const taskCompletionChart = new Chart(
+          document.getElementById("taskCompletionChart").getContext("2d"),
+          {
+            type: "pie",
+            data: {
+              labels: ["Completed", "Not Completed"],
+              datasets: [
+                {
+                  data: data,
+                  backgroundColor: ["#36a2eb", "#ff6384"],
+                },
+              ],
+            },
+          }
+        );
+      }
+
+      function updateTaskTimeDistributionChart() {
+        const dayTasks = tasks.filter((task) => task.time === "day").length;
+        const weekTasks = tasks.filter((task) => task.time === "week").length;
+        const monthTasks = tasks.filter((task) => task.time === "month").length;
+        const data = [dayTasks, weekTasks, monthTasks];
+
+        const taskTimeDistributionChart = new Chart(
+          document.getElementById("taskTimeDistributionChart").getContext("2d"),
+          {
+            type: "pie",
+            data: {
+              labels: ["Day", "Week", "Month"],
+              datasets: [
+                {
+                  data: data,
+                  backgroundColor: ["#ffcd56", "#ff6384", "#4bc0c0"],
+                },
+              ],
+            },
+          }
+        );
+      }
+    </script>
+    <!-- ... (same as previous) ... -->
+  </body>
+</html>
