@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Let's Connect - Chat</title>
+    <link rel="stylesheet" href="styl.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="container">
+        <div class="chat-section">
+          <div class="chat-window" id="chatWindow">
+            <!-- Messages will be displayed here -->
+          </div>
+          <div class="chat-options">
+            <button class="option" onclick="sendMessage('📷')">
+              📷 Camera
+            </button>
+            <button class="option" onclick="sendMessage('📎')">📎 Media</button>
+            <button class="option" onclick="sendMessage('🗳️')">🗳️ Poll</button>
+            <button class="option" onclick="sendMessage('😄')">😄 Emoji</button>
+          </div>
+          <div class="input-section">
+            <input type="text" id="chatInput" placeholder="Type your message" />
+            <button id="sendButton" onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function sendMessage(emoji) {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (message) {
+          const chatWindow = document.getElementById("chatWindow");
+          const newMessage = document.createElement("div");
+          newMessage.classList.add("message", "sent");
+          newMessage.innerHTML = `
+                    <span class="message-text">${emoji ? emoji : message}</span>
+                    <span class="message-time">${getCurrentTime()}</span>
+                `;
+          chatWindow.appendChild(newMessage);
+          input.value = "";
+
+          // Simulate the reply with the same message after a delay
+          setTimeout(() => {
+            const replyMessage = document.createElement("div");
+            replyMessage.classList.add("message", "received");
+            replyMessage.innerHTML = `
+                        <span class="message-text">${
+                          emoji ? emoji : message
+                        }</span>
+                        <span class="message-time">${getCurrentTime()}</span>
+                    `;
+            chatWindow.appendChild(replyMessage);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+          }, 1000); // Reply after 1 second delay
+        }
+      }
+
+      function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        return `${hours}:${minutes}`;
+      }
+    </script>
+  </body>
+</html>

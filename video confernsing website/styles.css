@@ -1,0 +1,198 @@
+/* Add your custom styles here */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  height: 100%;
+  background-color: #121010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #888484;
+  color: #333;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #336699;
+}
+
+.quote {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.animation-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.animation-section img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: scaleUp 1s ease-in-out infinite alternate;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.join-button,
+.create-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.join-button {
+  background-color: #33cc99;
+}
+
+.create-button {
+  background-color: #336699;
+}
+
+.join-button:hover,
+.create-button:hover {
+  transform: scale(1.05);
+}
+
+.buttons {
+  margin-top: 40px;
+}
+
+a.join-button,
+a.create-button {
+  display: inline-block;
+  padding: 15px 40px;
+  border-radius: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 10px;
+}
+
+a.join-button {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+a.create-button {
+  background-color: #aee942;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+a.join-button:hover {
+  background-color: #0056b3;
+}
+
+a.create-button:hover {
+  background-color: #d63485;
+}
+
+/* Same styles as the previous code */
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button#createButton {
+  background-color: #ff69b4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.meeting-code-section {
+  display: none;
+  margin-top: 40px;
+}
+
+.meeting-code-section h2 {
+  font-size: 24px;
+}
+
+.meeting-code-section p {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ff69b4;
+}
+
+/* Same styles as the previous code */
+
+/* Additional styles for action buttons */
+.meeting-code-section .action-buttons {
+  margin-top: 20px;
+}
+
+.meeting-code-section .action-buttons button {
+  margin-right: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.meeting-code-section .action-buttons button:hover {
+  background-color: #0056b3;
+}

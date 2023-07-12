@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Let's Connect</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      .title {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .quote {
+        font-size: 24px;
+        color: #555;
+        margin-bottom: 40px;
+        text-align: center;
+        max-width: 600px;
+      }
+
+      .animation-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .animation-section img {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        border-radius: 50%;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        animation: rotateImage 3s infinite linear;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .join-button,
+      .create-button {
+        padding: 15px 25px;
+        font-size: 24px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 10px;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .join-button {
+        background-color: #1f72ff;
+      }
+
+      .create-button {
+        background-color: #f5476d;
+      }
+
+      .join-button:hover,
+      .create-button:hover {
+        background-color: #1351b4;
+      }
+
+      /* Keyframe animation for fading in and rotating images */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scaleUp {
+        from {
+          transform: scale(1, 2);
+        }
+        to {
+          transform: scale(1.2);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Let's Connect</h1>
+      <div class="quote">
+        <p>"Connecting People from Across the Globe."</p>
+      </div>
+      <div class="animation-section">
+        <img src="/images/img2.jpg" alt="Image 1" />
+        <img src="/images/img3.jpg" alt="Image 2" />
+      </div>
+      <div class="buttons">
+        <a href="./join-meet.html" class="join-button">Join Meeting</a>
+        <a href="create-meeting.html" class="create-button">Create Meeting</a>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
